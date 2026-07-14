@@ -1,0 +1,143 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Contact from "../components/Contact.astro";
+---
+
+<Base
+  title="Pricing — SymFynity"
+  description="Weir, the open-source circuit breaker, is free forever under Apache-2.0. The hosted SymFynity platform is priced by conversation while we onboard early customers by hand."
+>
+  <Section as="h1" lead label="Pricing" heading="Weir is free forever. The platform starts with a conversation.">
+    <div class="prose">
+      <p>
+        Self-hosting Weir costs nothing and always will. It's Apache-2.0, it isn't
+        crippled without us, and there's no tier of it that we hold back. If that's all
+        you ever need, take it — that's the point of shipping it that way.
+      </p>
+    </div>
+  </Section>
+
+  <Section label="The two options" heading="What you get, and what it costs.">
+    <div class="cols">
+      <div class="card">
+        <span class="tag oss">Apache-2.0</span>
+        <h3>Weir, self-hosted</h3>
+        <p class="price">Free</p>
+        <ul>
+          <li>Rolling token budgets per tenant</li>
+          <li>Inline enforcement on streaming and non-streaming</li>
+          <li>Model and tool policy blocking</li>
+          <li>Local event log via <code>/events</code></li>
+          <li>Hot-reloading config, no restart</li>
+          <li>Runs entirely in your infrastructure</li>
+        </ul>
+        <a class="btn btn-ghost" href="https://github.com/SymFynity/weir-proxy" rel="noopener">
+          Get Weir
+        </a>
+      </div>
+
+      <div class="card">
+        <span class="tag">Commercial</span>
+        <h3>SymFynity, hosted</h3>
+        <p class="price">Let's talk</p>
+        <ul>
+          <li>Everything in Weir, unchanged</li>
+          <li>Fleet-wide spend visibility across instances</li>
+          <li>Alerting before budgets trip</li>
+          <li>Compliance reporting on blocked models and tools</li>
+          <li>Historical usage across every tenant</li>
+        </ul>
+        <Contact />
+      </div>
+    </div>
+  </Section>
+
+  <Section label="Why there's no pricing table" heading="Because we'd be making it up.">
+    <div class="prose stack">
+      <p>
+        We're onboarding early customers by hand — deliberately. Every account is
+        activated manually, which means we talk to you before you can send us a single
+        event. That's a real constraint in the product, not a growth tactic.
+      </p>
+      <p>
+        Publishing tiers now would mean inventing numbers before we understand what the
+        platform is worth to the people using it. You'd anchor on them, we'd regret them,
+        and one of us would be wrong. Ask us instead — and if Weir on its own covers you,
+        we'll say so.
+      </p>
+    </div>
+  </Section>
+</Base>
+
+<style>
+  .stack {
+    margin-bottom: 2rem;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 48rem) {
+    .cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+
+  .card {
+    border-top: 2px solid var(--brass);
+    padding-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .card h3 {
+    font-family: var(--mono);
+    font-size: 1.0625rem;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .price {
+    font-family: var(--mono);
+    font-size: 1.75rem;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--brass);
+  }
+
+  .card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--ink-muted);
+    font-size: 0.96875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .card ul li::marker {
+    color: var(--brass);
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--rule);
+    color: var(--ink-muted);
+  }
+
+  .tag.oss {
+    color: var(--flow);
+    border-color: var(--flow);
+  }
+</style>

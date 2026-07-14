@@ -1,0 +1,199 @@
+/*
+ * Design tokens. No component defines a raw colour — everything reads from here.
+ *
+ * The palette is grounded in the product: a weir is a low dam that regulates and
+ * measures a river rather than stopping it. Hence water-depth grounds, a brass
+ * instrument accent for the threshold, teal for traffic in the channel, and a
+ * single warm red reserved solely for the trip event.
+ */
+
+:root {
+  /* light: cool survey paper, biased toward the water */
+  --ground:      #edf0f2;
+  --ground-2:    #ffffff;
+  --ground-3:    #e2e7eb;
+  --ink:         #16202b;
+  --ink-muted:   #5c6e7e;
+  --rule:        #d3dbe1;
+  --brass:       #8a5e1f;
+  --brass-soft:  #b8873c;
+  --flow:        #2f6d6a;
+  --trip:        #a93a24;
+  --on-brass:    #ffffff;
+  --shadow:      rgba(22, 32, 43, 0.08);
+
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas,
+          "Liberation Mono", monospace;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+           "Times New Roman", serif;
+
+  --fs-display: clamp(2.1rem, 5.2vw, 3.5rem);
+  --fs-h2:      clamp(1.35rem, 2.6vw, 1.75rem);
+  --fs-body:    1.0625rem;
+  --fs-small:   0.8125rem;
+  --fs-label:   0.6875rem;
+
+  --measure:     64ch;
+  --pad:         clamp(1.25rem, 5vw, 2.5rem);
+  --gap-section: clamp(4rem, 9vw, 7rem);
+}
+
+/* dark: deep water */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ground:     #0d141c;
+    --ground-2:   #131d28;
+    --ground-3:   #1a2734;
+    --ink:        #e8edf2;
+    --ink-muted:  #8fa3b5;
+    --rule:       #24313e;
+    --brass:      #c98f3c;
+    --brass-soft: #9c6e2e;
+    --flow:       #5b9e9b;
+    --trip:       #d2593f;
+    --on-brass:   #0d141c;
+    --shadow:     rgba(0, 0, 0, 0.4);
+  }
+}
+
+/*
+ * The theme follows the reader's OS preference. There is deliberately no
+ * in-page toggle: it would mean shipping JS to /about and /pricing, which
+ * currently ship none, to solve a problem the OS already solves.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: var(--fs-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.wrap {
+  max-width: 74rem;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.label {
+  font-family: var(--mono);
+  font-size: var(--fs-label);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-muted);
+}
+
+.prose {
+  max-width: var(--measure);
+}
+
+.prose p {
+  margin: 0 0 1.1rem;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.link {
+  color: var(--brass);
+  text-decoration: none;
+  border-bottom: 1px solid var(--brass-soft);
+}
+
+.link:hover {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+.btn {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: var(--fs-small);
+  text-decoration: none;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid var(--brass);
+  background: var(--brass);
+  color: var(--on-brass);
+  transition: opacity 0.15s, transform 0.05s;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--rule);
+  color: var(--ink);
+}
+
+.btn-ghost:hover {
+  border-color: var(--ink-muted);
+  opacity: 1;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: 3px;
+}
+
+.code-wrap {
+  overflow-x: auto;
+  background: var(--ground-2);
+  border: 1px solid var(--rule);
+}
+
+.code-wrap pre {
+  margin: 0;
+  padding: 1rem 1.125rem;
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.c-dim {
+  color: var(--ink-muted);
+}
+
+.c-brass {
+  color: var(--brass);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

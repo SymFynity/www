@@ -1,0 +1,38 @@
+---
+/*
+ * Isolated on purpose.
+ *
+ * The contact form is deferred (Basin/Formspree later). When it lands, this
+ * component is the only file that changes — no page touches the mechanism.
+ *
+ * TODO: replace the placeholder below with the real form:
+ *   <form action="https://usebasin.com/f/<id>" method="POST"> … </form>
+ * Until then the primary CTA is "Start with Weir", which points at a real
+ * public repo and works today.
+ */
+---
+
+<div class="soon" id="contact">
+  <span class="dot" aria-hidden="true"></span>
+  Contact — coming soon
+</div>
+
+<style>
+  .soon {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    color: var(--ink-muted);
+    border: 1px dashed var(--rule);
+    padding: 0.7rem 1.1rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--brass);
+    border-radius: 50%;
+  }
+</style>

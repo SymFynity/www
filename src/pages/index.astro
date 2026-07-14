@@ -1,0 +1,279 @@
+---
+import Base from "../layouts/Base.astro";
+import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import Contact from "../components/Contact.astro";
+
+const components = [
+  {
+    name: "weir-proxy",
+    href: "https://github.com/SymFynity/weir-proxy",
+    does: "The inline circuit breaker. Budgets, model and tool policy.",
+    licence: "Apache-2.0",
+    oss: true,
+  },
+  {
+    name: "weir-agent",
+    href: "https://github.com/SymFynity/weir-agent",
+    does: "Forwards usage metadata off the box. Optional.",
+    licence: "Apache-2.0",
+    oss: true,
+  },
+  {
+    name: "SymFynity",
+    href: null,
+    does: "Fleet aggregation, alerting, compliance reporting.",
+    licence: "Commercial",
+    oss: false,
+  },
+];
+---
+
+<Base
+  title="SymFynity — Governance for AI API spend"
+  description="SymFynity governs what your AI agents spend, enforced inline on every request and every streamed chunk. Built on Weir, an open-source circuit breaker for AI API traffic."
+>
+  <Hero />
+
+  <Section id="problem" label="The problem" heading="Nothing crashes. That's what makes it expensive.">
+    <div class="prose">
+      <p>
+        An agent loops. A tool call recurses into itself. No exception is thrown, no
+        alarm fires, no pager goes off — because from the outside it looks exactly like
+        work getting done. By the time the billing dashboard refreshes tomorrow morning,
+        a bug has spent four figures.
+      </p>
+      <p>
+        Billing dashboards report hourly or daily. Rate limits count requests, not what
+        they cost. Neither is looking at the thing that hurts, and both find out long
+        after the money is gone. <strong>The only place to stop a runaway agentic loop is
+        in the request path, while it's running.</strong>
+      </p>
+    </div>
+  </Section>
+
+  <Section
+    id="how"
+    label="How it works"
+    heading="A weir doesn't stop the river. It measures it, and holds the line."
+  >
+    <div class="prose stack">
+      <p>
+        Weir sits between your application and OpenAI or Anthropic, tracking a rolling
+        token budget per tenant. For streaming responses it checks the budget <em>before</em>
+        forwarding each chunk — so an over-budget chunk is never sent at all. For
+        non-streaming, it reads the response's authoritative usage and returns <code>429</code>
+        rather than the body. A tenant already over budget is rejected before Weir even
+        calls upstream.
+      </p>
+      <p>
+        Point a client at it. A base URL and one header — nothing else in your code
+        changes.
+      </p>
+    </div>
+
+    <div class="code-wrap">
+      <pre><span class="c-dim">from</span> openai <span class="c-dim">import</span> OpenAI
+
+client = OpenAI(
+    base_url=<span class="c-brass">"https://weir.internal:8080/openai/v1"</span>,
+    api_key=<span class="c-brass">"sk-..."</span>,  <span class="c-dim"># your real key — Weir passes it straight through</span>
+    default_headers=&#123;<span class="c-brass">"x-weir-tenant"</span>: <span class="c-brass">"acct_123"</span>&#125;,
+)</pre>
+    </div>
+  </Section>
+
+  <Section id="open" label="Open source" heading="The enforcement point is yours, not ours.">
+    <div class="prose stack">
+      <p>
+        Weir is Apache-2.0 and runs entirely in your infrastructure. It has no dependency
+        on SymFynity: no account check, no phone-home, no degraded mode. Self-host it,
+        never talk to us, and it still does its job in full.
+      </p>
+    </div>
+
+    <div class="table-scroll">
+      <table class="ledger">
+        <thead>
+          <tr>
+            <th>Component</th>
+            <th>What it does</th>
+            <th>Licence</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            components.map((c) => (
+              <tr>
+                <td>
+                  {c.href ? (
+                    <a class="link" href={c.href} rel="noopener">
+                      {c.name}
+                    </a>
+                  ) : (
+                    c.name
+                  )}
+                </td>
+                <td>{c.does}</td>
+                <td>
+                  <span class:list={["tag", { oss: c.oss }]}>{c.licence}</span>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <Section id="privacy" label="What leaves your network" heading="Your prompts are not our business model.">
+    <p class="statement">
+      Prompt content, response content, and tool call arguments never leave your own
+      process.
+    </p>
+    <div class="prose">
+      <p>
+        The optional agent forwards metadata only: tenant ID, provider, model name, tool
+        <em>names</em>, token counts, timestamp, and outcome. That is the entire payload —
+        Weir doesn't expose the rest in the first place, so there's nothing here to opt
+        out of.
+      </p>
+      <p>
+        The agent is open source specifically so you don't have to take our word for any
+        of that. It's about 800 lines of Rust. Read it, build it, run your own — or point
+        it at your own collector instead of ours.
+      </p>
+    </div>
+  </Section>
+
+  <Section id="platform" label="The platform" heading="Weir enforces on one instance. SymFynity sees the fleet.">
+    <div class="cols">
+      <div class="card">
+        <h3>FinOps</h3>
+        <p>
+          Token volume across every tenant and every instance, in one place — with
+          alerting <em>before</em> budgets trip rather than a postmortem after.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Compliance</h3>
+        <p>
+          Which models and tools were blocked, when, and by which rule. The same
+          enforcement point that stops runaway spend already knows the answer.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section id="pricing" label="Pricing" heading="Weir is free forever. Talk to us about the rest.">
+    <div class="prose stack">
+      <p>
+        Self-hosting Weir costs nothing and always will — it's Apache-2.0 and it isn't
+        crippled without us. SymFynity is for when you're running enough of it that you
+        need the view across all of it. <a class="link" href="/pricing">See how pricing works</a>.
+      </p>
+    </div>
+    <Contact />
+  </Section>
+</Base>
+
+<style>
+  .stack {
+    margin-bottom: 2rem;
+  }
+
+  .table-scroll {
+    overflow-x: auto;
+  }
+
+  .ledger {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+  }
+
+  .ledger th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: var(--fs-label);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    font-weight: 500;
+    padding: 0 1rem 0.6rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .ledger td {
+    padding: 0.85rem 1rem 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+
+  .ledger td:first-child {
+    font-family: var(--mono);
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  .ledger td:last-child {
+    text-align: right;
+    padding-right: 0;
+  }
+
+  .tag {
+    font-family: var(--mono);
+    font-size: var(--fs-label);
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.45rem;
+    border: 1px solid var(--rule);
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .tag.oss {
+    color: var(--flow);
+    border-color: var(--flow);
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 48rem) {
+    .cols {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+  }
+
+  .card {
+    border-top: 2px solid var(--brass);
+    padding-top: 1rem;
+  }
+
+  .card h3 {
+    font-family: var(--mono);
+    font-size: 0.9375rem;
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.96875rem;
+  }
+
+  /* the one held-out moment on the page */
+  .statement {
+    border-left: 2px solid var(--brass);
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    margin: 0 0 1.5rem;
+    font-size: 1.1875rem;
+    max-width: var(--measure);
+  }
+</style>

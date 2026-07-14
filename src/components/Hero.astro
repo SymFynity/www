@@ -1,0 +1,72 @@
+---
+import WeirDiagram from "./WeirDiagram.astro";
+---
+
+<section class="hero">
+  <div class="hero-grid">
+    <div>
+      <span class="label">AI spend governance</span>
+      <h1>Stop the bill <span class="cut">before</span> it arrives.</h1>
+      <p class="lede">
+        SymFynity governs what your AI agents spend — enforced inline, on every
+        request and every streamed chunk. Not reported to you tomorrow morning.
+      </p>
+      <div class="cta-row">
+        <a class="btn" href="https://github.com/SymFynity/weir-proxy" rel="noopener">
+          Start with Weir — it's open source
+        </a>
+        <a class="btn btn-ghost" href="#platform">See the platform</a>
+      </div>
+    </div>
+
+    <WeirDiagram />
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(3rem, 8vw, 5.5rem) 0;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 62rem) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      align-items: center;
+    }
+  }
+
+  h1 {
+    font-family: var(--mono);
+    font-size: var(--fs-display);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    text-wrap: balance;
+    margin: 0.75rem 0 0;
+  }
+
+  .cut {
+    color: var(--brass);
+  }
+
+  .lede {
+    max-width: var(--measure);
+    color: var(--ink-muted);
+    font-size: 1.1875rem;
+    margin: 1.25rem 0 0;
+  }
+
+  .cta-row {
+    display: flex;
+    gap: 0.875rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+    align-items: center;
+  }
+</style>

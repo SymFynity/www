@@ -1,0 +1,42 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer>
+  <span>© {year} SymFynity</span>
+  <span class="foot-links">
+    <a href="https://github.com/SymFynity" rel="noopener">GitHub</a>
+    <a href="https://github.com/SymFynity/weir-proxy" rel="noopener">Weir</a>
+    <a href="/about">About</a>
+    <a href="/pricing">Pricing</a>
+  </span>
+</footer>
+
+<style>
+  footer {
+    border-top: 1px solid var(--rule);
+    padding-block: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    color: var(--ink-muted);
+  }
+
+  footer a {
+    color: var(--ink-muted);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--brass);
+  }
+
+  .foot-links {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
+</style>

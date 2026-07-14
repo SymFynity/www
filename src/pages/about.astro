@@ -1,0 +1,146 @@
+---
+import Base from "../layouts/Base.astro";
+import Section from "../components/Section.astro";
+import Contact from "../components/Contact.astro";
+
+/*
+ * TODO: the "Who's behind it" section is a placeholder. It needs a real
+ * founder bio — background, and why this problem was worth building a proxy
+ * for rather than another dashboard.
+ */
+---
+
+<Base
+  title="About — SymFynity"
+  description="Why SymFynity exists: AI agents can spend unbounded money without anything appearing to break, and the only place to stop that is inside the request path."
+>
+  <Section as="h1" lead label="About" heading="Weir exists because the loop doesn't look like a bug.">
+    <div class="prose">
+      <p>
+        Every other kind of runaway failure announces itself. A memory leak gets OOM
+        killed. An infinite loop pins a CPU. A bad query takes the database down and
+        someone gets paged. The system's own pain is the alarm.
+      </p>
+      <p>
+        An agent burning money does none of that. It looks like a healthy service making
+        successful API calls. Every response is a <code>200</code>. Latency is fine.
+        Nothing is saturated, nothing restarts, no page fires. The only symptom is an
+        invoice, and invoices arrive after the fact — hourly at best, monthly at worst.
+      </p>
+      <p>
+        <strong>That gap is the whole problem.</strong> Every tool that watches spend
+        watches it from the outside, after the money is already committed. Dashboards
+        report. Alerts notify. Neither can refuse. By the time anything tells you, the
+        only decision left is how to explain it.
+      </p>
+    </div>
+  </Section>
+
+  <Section label="The position" heading="Enforcement has to live in the request path.">
+    <div class="prose">
+      <p>
+        A thing that can only report is a thing that can only apologise. To actually stop
+        spend, you have to be standing in the traffic, willing to refuse — which means
+        being a proxy, and means being fast and boring enough that people will put you in
+        the path of production traffic.
+      </p>
+      <p>
+        Hence Weir: a small Rust binary that forwards your requests upstream unmodified,
+        counts what comes back, and cuts the stream the moment a tenant would go over
+        budget. It never stores your credentials. It never sees a request it doesn't
+        forward. It is deliberately unambitious about everything except the one thing it
+        does.
+      </p>
+      <p>
+        The name is the design. A weir is a low dam across a river — it doesn't stop the
+        water, it regulates the flow and measures the discharge. That's the job.
+      </p>
+    </div>
+  </Section>
+
+  <Section label="Principles" heading="Three commitments we designed around, not toward.">
+    <div class="cols">
+      <div class="card">
+        <h3>The proxy owes us nothing</h3>
+        <p>
+          Weir has no account check, no phone-home, and no degraded mode. It was built to
+          work standalone before there was anything to sell, and that hasn't changed
+          because the moment enforcement depends on a vendor being reachable, it isn't
+          enforcement.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Your prompts aren't our business</h3>
+        <p>
+          Prompt content, response content, and tool arguments never leave your process —
+          not by policy but by construction. Weir doesn't expose them, so nothing
+          downstream can forward them. The agent that talks to us is open source so you
+          can check rather than trust.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Boring where it counts</h3>
+        <p>
+          This sits in the path of your production traffic. That earns a specific kind of
+          restraint: no clever rewriting of your requests, no opinion about your prompts,
+          no features that would justify a bigger blast radius.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section label="Who's behind it" heading="A small, founder-led shop.">
+    <div class="prose stack">
+      <p>
+        SymFynity is built by <a class="link" href="https://github.com/SymFynity" rel="noopener">a
+        small independent team</a> who spend their working lives in other people's cloud
+        infrastructure. Weir was written because the tools for this problem all reported
+        and none refused.
+      </p>
+      <p>
+        The open-source components are on GitHub. The design documents behind them are
+        checked in alongside the code, so you can read the reasoning as well as the
+        result.
+      </p>
+    </div>
+    <Contact />
+  </Section>
+</Base>
+
+<style>
+  .stack {
+    margin-bottom: 2rem;
+  }
+
+  .cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 48rem) {
+    .cols {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  .card {
+    border-top: 2px solid var(--brass);
+    padding-top: 1rem;
+  }
+
+  .card h3 {
+    font-family: var(--mono);
+    font-size: 0.9375rem;
+    margin: 0 0 0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--ink-muted);
+    font-size: 0.96875rem;
+  }
+</style>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#0d141c"/>
+  <!-- the channel -->
+  <rect x="0" y="14" width="32" height="4" fill="#5b9e9b"/>
+  <!-- the weir: the line that holds -->
+  <rect x="20" y="5" width="3" height="22" fill="#c98f3c"/>
+</svg>
