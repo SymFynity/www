@@ -14,7 +14,7 @@ import Contact from "../components/Contact.astro";
   title="About — SymFynity"
   description="Why SymFynity exists: AI agents can spend unbounded money without anything appearing to break, and the only place to stop that is inside the request path."
 >
-  <Section as="h1" lead label="About" heading="Weir exists because the loop doesn't look like a bug.">
+  <Section as="h1" lead label="About" heading="SymFynity exists because the loop doesn't look like a bug.">
     <div class="prose">
       <p>
         Every other kind of runaway failure announces itself. A memory leak gets OOM
@@ -45,15 +45,17 @@ import Contact from "../components/Contact.astro";
         the path of production traffic.
       </p>
       <p>
-        Hence Weir: a small Rust binary that forwards your requests upstream unmodified,
+        Hence SymFynity: a small Rust binary that forwards your requests upstream unmodified,
         counts what comes back, and cuts the stream the moment a tenant would go over
         budget. It never stores your credentials. It never sees a request it doesn't
         forward. It is deliberately unambitious about everything except the one thing it
         does.
       </p>
       <p>
-        The name is the design. A weir is a low dam across a river — it doesn't stop the
-        water, it regulates the flow and measures the discharge. That's the job.
+        The picture we kept coming back to is a weir: a low dam across a river that
+        doesn't stop the water, but regulates the flow and measures the discharge.
+        Nothing about it is clever. It just stands there, in the current, and holds
+        the line. That's the job.
       </p>
     </div>
   </Section>
@@ -63,7 +65,7 @@ import Contact from "../components/Contact.astro";
       <div class="card">
         <h3>The proxy owes us nothing</h3>
         <p>
-          Weir has no account check, no phone-home, and no degraded mode. It was built to
+          SymFynity has no account check, no phone-home, and no degraded mode. It was built to
           work standalone before there was anything to sell, and that hasn't changed
           because the moment enforcement depends on a vendor being reachable, it isn't
           enforcement.
@@ -73,7 +75,7 @@ import Contact from "../components/Contact.astro";
         <h3>Your prompts aren't our business</h3>
         <p>
           Prompt content, response content, and tool arguments never leave your process —
-          not by policy but by construction. Weir doesn't expose them, so nothing
+          not by policy but by construction. SymFynity doesn't expose them, so nothing
           downstream can forward them. The source of the agent that talks to us is
           published so you can check rather than trust.
         </p>
@@ -94,11 +96,11 @@ import Contact from "../components/Contact.astro";
       <p>
         SymFynity is built by <a class="link" href="https://github.com/SymFynity" rel="noopener">a
         small independent team</a> who spend their working lives in other people's cloud
-        infrastructure. Weir was written because the tools for this problem all reported
+        infrastructure. SymFynity was written because the tools for this problem all reported
         and none refused.
       </p>
       <p>
-        Weir and its agent are on GitHub, source-available under BSL 1.1. The design
+        SymFynity and its agent are on GitHub, source-available under BSL 1.1. The design
         documents behind them are checked in alongside the code, so you can read the
         reasoning as well as the result.
       </p>

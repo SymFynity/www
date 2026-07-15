@@ -3,7 +3,7 @@
  * The hero thesis: rather than describe the circuit breaker, run one.
  *
  * Chunks stream the channel, the rolling budget fills, and at 100% the next
- * chunk is stopped dead at the weir and the stream closes with budget_blocked.
+ * chunk is stopped dead at the symfynity and the stream closes with budget_blocked.
  * Then it resets and loops.
  *
  * Self-contained: knows nothing about page content. Reads its colours from the
@@ -13,7 +13,7 @@
 
 <figure class="instrument">
   <figcaption class="instrument-head">
-    <span class="label">weir · acct_123</span>
+    <span class="label">symfynity · acct_123</span>
     <span class="readout" data-readout>
       <span class="label">budget</span>
       <span class="val" data-budget>0%</span>
@@ -21,9 +21,9 @@
   </figcaption>
 
   <canvas
-    data-weir-canvas
+    data-symfynity-canvas
     role="img"
-    aria-label="Diagram of Weir enforcing a token budget. Response chunks stream left to right through the proxy while the tenant is under budget. When the budget is exhausted the next chunk is stopped at the proxy, and the connection closes with a budget_blocked event."
+    aria-label="Diagram of SymFynity enforcing a token budget. Response chunks stream left to right through the proxy while the tenant is under budget. When the budget is exhausted the next chunk is stopped at the proxy, and the connection closes with a budget_blocked event."
   ></canvas>
 
   <div class="instrument-foot" data-event-line>&nbsp;</div>
@@ -86,7 +86,7 @@
 </style>
 
 <script>
-  const canvas = document.querySelector<HTMLCanvasElement>("[data-weir-canvas]");
+  const canvas = document.querySelector<HTMLCanvasElement>("[data-symfynity-canvas]");
   const budgetEl = document.querySelector<HTMLElement>("[data-budget]");
   const eventEl = document.querySelector<HTMLElement>("[data-event-line]");
   const readoutEl = document.querySelector<HTMLElement>("[data-readout]");
@@ -145,7 +145,7 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
-    const weirX = () => W * 0.66;
+    const gateX = () => W * 0.66;
     const laneY = () => H * 0.46;
 
     function reset() {
@@ -157,7 +157,7 @@
     }
 
     function trip(c: Chunk, now: number) {
-      c.x = weirX() - c.w;
+      c.x = gateX() - c.w;
       c.stopped = true;
       state = "tripped";
       resetAt = now + HOLD;
@@ -181,7 +181,7 @@
         const c = chunks[i];
         c.x += SPEED * dt;
 
-        if (!c.judged && c.x + c.w >= weirX()) {
+        if (!c.judged && c.x + c.w >= gateX()) {
           c.judged = true;
           if (budget + COST <= 1) budget += COST;
           else trip(c, now);
@@ -196,7 +196,7 @@
     function draw() {
       ctx.clearRect(0, 0, W, H);
       const y = laneY();
-      const wx = weirX();
+      const wx = gateX();
       const tripped = state === "tripped";
 
       // channel bed
@@ -226,7 +226,7 @@
       }
       ctx.globalAlpha = 1;
 
-      // the weir
+      // the symfynity
       ctx.strokeStyle = tripped ? tokens.trip : tokens.brass;
       ctx.lineWidth = 2;
       ctx.beginPath();
@@ -238,7 +238,7 @@
       ctx.fillRect(wx - 4, y + 39, 8, 5);
       ctx.font = '500 9px ui-monospace, SFMono-Regular, Menlo, monospace';
       ctx.textAlign = "center";
-      ctx.fillText("WEIR", wx, y - 51);
+      ctx.fillText("SYMFYNITY", wx, y - 51);
 
       // rolling budget gauge
       const gx = 16;
@@ -273,7 +273,7 @@
         { x: W * 0.1, w: 15, judged: true },
         { x: W * 0.28, w: 18, judged: true },
         { x: W * 0.44, w: 12, judged: true },
-        { x: weirX() - 16, w: 16, judged: true, stopped: true },
+        { x: gateX() - 16, w: 16, judged: true, stopped: true },
       ];
       budget = 1;
       state = "tripped";

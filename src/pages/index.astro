@@ -6,21 +6,21 @@ import Contact from "../components/Contact.astro";
 
 const components = [
   {
-    name: "weir-proxy",
-    href: "https://github.com/SymFynity/weir-proxy",
+    name: "symfynity",
+    href: "https://github.com/SymFynity/symfynity",
     does: "The inline circuit breaker. Budgets, model and tool policy.",
     licence: "BSL 1.1",
     oss: true,
   },
   {
-    name: "weir-agent",
-    href: "https://github.com/SymFynity/weir-agent",
+    name: "symfynity-agent",
+    href: "https://github.com/SymFynity/symfynity-agent",
     does: "Forwards usage metadata off the box. Optional.",
     licence: "BSL 1.1",
     oss: true,
   },
   {
-    name: "SymFynity",
+    name: "SymFynity Cloud",
     href: null,
     does: "Fleet aggregation, alerting, compliance reporting.",
     licence: "Commercial",
@@ -31,7 +31,7 @@ const components = [
 
 <Base
   title="SymFynity — Governance for AI API spend"
-  description="SymFynity governs what your AI agents spend, enforced inline on every request and every streamed chunk. Built on Weir, a source-available circuit breaker for AI API traffic."
+  description="SymFynity governs what your AI agents spend, enforced inline on every request and every streamed chunk. A source-available circuit breaker for AI API traffic, running in your own infrastructure."
 >
   <Hero />
 
@@ -55,15 +55,15 @@ const components = [
   <Section
     id="how"
     label="How it works"
-    heading="A weir doesn't stop the river. It measures it, and holds the line."
+    heading="Like a weir: it doesn't stop the river. It measures it, and holds the line."
   >
     <div class="prose stack">
       <p>
-        Weir sits between your application and OpenAI or Anthropic, tracking a rolling
+        SymFynity sits between your application and OpenAI or Anthropic, tracking a rolling
         token budget per tenant. For streaming responses it checks the budget <em>before</em>
         forwarding each chunk — so an over-budget chunk is never sent at all. For
         non-streaming, it reads the response's authoritative usage and returns <code>429</code>
-        rather than the body. A tenant already over budget is rejected before Weir even
+        rather than the body. A tenant already over budget is rejected before SymFynity even
         calls upstream.
       </p>
       <p>
@@ -76,9 +76,9 @@ const components = [
       <pre><span class="c-dim">from</span> openai <span class="c-dim">import</span> OpenAI
 
 client = OpenAI(
-    base_url=<span class="c-brass">"https://weir.internal:8080/openai/v1"</span>,
-    api_key=<span class="c-brass">"sk-..."</span>,  <span class="c-dim"># your real key — Weir passes it straight through</span>
-    default_headers=&#123;<span class="c-brass">"x-weir-tenant"</span>: <span class="c-brass">"acct_123"</span>&#125;,
+    base_url=<span class="c-brass">"https://symfynity.internal:8080/openai/v1"</span>,
+    api_key=<span class="c-brass">"sk-..."</span>,  <span class="c-dim"># your real key — SymFynity passes it straight through</span>
+    default_headers=&#123;<span class="c-brass">"x-symfynity-tenant"</span>: <span class="c-brass">"acct_123"</span>&#125;,
 )</pre>
     </div>
   </Section>
@@ -86,14 +86,14 @@ client = OpenAI(
   <Section id="open" label="The source" heading="The enforcement point is yours, not ours.">
     <div class="prose stack">
       <p>
-        Weir runs entirely in your infrastructure. It has no dependency on SymFynity: no
+        SymFynity runs entirely in your infrastructure. It has no dependency on SymFynity Cloud: no
         account check, no phone-home, no degraded mode. Self-host it, never talk to us,
         and it still does its job in full.
       </p>
       <p>
         It's source-available under BSL 1.1, not open source — the honest word matters
         here. Read it, audit it, fork it, run it in production for free, forever. The
-        only thing the licence prohibits is reselling Weir as a hosted service that
+        only thing the licence prohibits is reselling SymFynity as a hosted service that
         competes with us. And four years after each release, that version becomes
         Apache-2.0 automatically — so if we vanish or turn hostile, the code outlives us.
       </p>
@@ -142,7 +142,7 @@ client = OpenAI(
       <p>
         The optional agent forwards metadata only: tenant ID, provider, model name, tool
         <em>names</em>, token counts, timestamp, and outcome. That is the entire payload —
-        Weir doesn't expose the rest in the first place, so there's nothing here to opt
+        SymFynity doesn't expose the rest in the first place, so there's nothing here to opt
         out of.
       </p>
       <p>
@@ -153,7 +153,7 @@ client = OpenAI(
     </div>
   </Section>
 
-  <Section id="platform" label="The platform" heading="Weir enforces on one instance. SymFynity sees the fleet.">
+  <Section id="platform" label="The platform" heading="SymFynity enforces on one instance. SymFynity Cloud sees the fleet.">
     <div class="cols">
       <div class="card">
         <h3>FinOps</h3>
@@ -172,11 +172,11 @@ client = OpenAI(
     </div>
   </Section>
 
-  <Section id="pricing" label="Pricing" heading="Weir is free forever. Talk to us about the rest.">
+  <Section id="pricing" label="Pricing" heading="SymFynity is free forever. Talk to us about the rest.">
     <div class="prose stack">
       <p>
-        Self-hosting Weir costs nothing and always will — and it isn't crippled without
-        us. SymFynity is for when you're running enough of it that you need the view
+        Self-hosting SymFynity costs nothing and always will — and it isn't crippled without
+        us. SymFynity Cloud is for when you're running enough of it that you need the view
         across all of it. <a class="link" href="/pricing">See how pricing works</a>.
       </p>
     </div>
