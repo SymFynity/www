@@ -6,14 +6,21 @@ import Contact from "../components/Contact.astro";
 
 <Base
   title="Pricing — SymFynity"
-  description="Weir, the open-source circuit breaker, is free forever under Apache-2.0. The hosted SymFynity platform is priced by conversation while we onboard early customers by hand."
+  description="Weir, the source-available circuit breaker, is free to run forever under BSL 1.1. The hosted SymFynity platform is priced by conversation while we onboard early customers by hand."
 >
   <Section as="h1" lead label="Pricing" heading="Weir is free forever. The platform starts with a conversation.">
-    <div class="prose">
+    <div class="prose stack">
       <p>
-        Self-hosting Weir costs nothing and always will. It's Apache-2.0, it isn't
-        crippled without us, and there's no tier of it that we hold back. If that's all
-        you ever need, take it — that's the point of shipping it that way.
+        Self-hosting Weir costs nothing and always will. It isn't crippled without us,
+        and there's no tier of it that we hold back. If that's all you ever need, take
+        it — that's the point of shipping it that way.
+      </p>
+      <p>
+        Weir is source-available under BSL 1.1, which isn't the same as open source and
+        we won't pretend otherwise. In practice the difference reaches you only if you
+        try to resell Weir as a hosted service competing with us. Running it in
+        production, on your own infrastructure, for your own traffic, is explicitly free
+        — and four years after each release, that version turns Apache-2.0 on its own.
       </p>
     </div>
   </Section>
@@ -21,7 +28,7 @@ import Contact from "../components/Contact.astro";
   <Section label="The two options" heading="What you get, and what it costs.">
     <div class="cols">
       <div class="card">
-        <span class="tag oss">Apache-2.0</span>
+        <span class="tag oss">BSL 1.1</span>
         <h3>Weir, self-hosted</h3>
         <p class="price">Free</p>
         <ul>
@@ -31,6 +38,7 @@ import Contact from "../components/Contact.astro";
           <li>Local event log via <code>/events</code></li>
           <li>Hot-reloading config, no restart</li>
           <li>Runs entirely in your infrastructure</li>
+          <li>Becomes Apache-2.0 four years after release</li>
         </ul>
         <a class="btn btn-ghost" href="https://github.com/SymFynity/weir-proxy" rel="noopener">
           Get Weir

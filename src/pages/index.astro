@@ -9,14 +9,14 @@ const components = [
     name: "weir-proxy",
     href: "https://github.com/SymFynity/weir-proxy",
     does: "The inline circuit breaker. Budgets, model and tool policy.",
-    licence: "Apache-2.0",
+    licence: "BSL 1.1",
     oss: true,
   },
   {
     name: "weir-agent",
     href: "https://github.com/SymFynity/weir-agent",
     does: "Forwards usage metadata off the box. Optional.",
-    licence: "Apache-2.0",
+    licence: "BSL 1.1",
     oss: true,
   },
   {
@@ -31,7 +31,7 @@ const components = [
 
 <Base
   title="SymFynity — Governance for AI API spend"
-  description="SymFynity governs what your AI agents spend, enforced inline on every request and every streamed chunk. Built on Weir, an open-source circuit breaker for AI API traffic."
+  description="SymFynity governs what your AI agents spend, enforced inline on every request and every streamed chunk. Built on Weir, a source-available circuit breaker for AI API traffic."
 >
   <Hero />
 
@@ -83,12 +83,19 @@ client = OpenAI(
     </div>
   </Section>
 
-  <Section id="open" label="Open source" heading="The enforcement point is yours, not ours.">
+  <Section id="open" label="The source" heading="The enforcement point is yours, not ours.">
     <div class="prose stack">
       <p>
-        Weir is Apache-2.0 and runs entirely in your infrastructure. It has no dependency
-        on SymFynity: no account check, no phone-home, no degraded mode. Self-host it,
-        never talk to us, and it still does its job in full.
+        Weir runs entirely in your infrastructure. It has no dependency on SymFynity: no
+        account check, no phone-home, no degraded mode. Self-host it, never talk to us,
+        and it still does its job in full.
+      </p>
+      <p>
+        It's source-available under BSL 1.1, not open source — the honest word matters
+        here. Read it, audit it, fork it, run it in production for free, forever. The
+        only thing the licence prohibits is reselling Weir as a hosted service that
+        competes with us. And four years after each release, that version becomes
+        Apache-2.0 automatically — so if we vanish or turn hostile, the code outlives us.
       </p>
     </div>
 
@@ -139,9 +146,9 @@ client = OpenAI(
         out of.
       </p>
       <p>
-        The agent is open source specifically so you don't have to take our word for any
-        of that. It's about 800 lines of Rust. Read it, build it, run your own — or point
-        it at your own collector instead of ours.
+        The agent's source is published specifically so you don't have to take our word
+        for any of that. It's about 800 lines of Rust. Read it, build it, run your own —
+        or point it at your own collector instead of ours.
       </p>
     </div>
   </Section>
@@ -168,9 +175,9 @@ client = OpenAI(
   <Section id="pricing" label="Pricing" heading="Weir is free forever. Talk to us about the rest.">
     <div class="prose stack">
       <p>
-        Self-hosting Weir costs nothing and always will — it's Apache-2.0 and it isn't
-        crippled without us. SymFynity is for when you're running enough of it that you
-        need the view across all of it. <a class="link" href="/pricing">See how pricing works</a>.
+        Self-hosting Weir costs nothing and always will — and it isn't crippled without
+        us. SymFynity is for when you're running enough of it that you need the view
+        across all of it. <a class="link" href="/pricing">See how pricing works</a>.
       </p>
     </div>
     <Contact />
