@@ -1,38 +1,111 @@
 ---
 /*
- * Isolated on purpose.
+ * Contact form. POSTs directly to Basin (hosted form backend) — this site
+ * is fully static and stays that way. The Basin form ID is public by
+ * design; submissions are forwarded to the configured inbox.
  *
- * The contact form is deferred (Basin/Formspree later). When it lands, this
- * component is the only file that changes — no page touches the mechanism.
- *
- * TODO: replace the placeholder below with the real form:
- *   <form action="https://usebasin.com/f/<id>" method="POST"> … </form>
- * Until then the primary CTA is "Start with SymFynity", which points at a real
- * public repo and works today.
+ * Baseline is a native POST (works with JS disabled — Basin serves the
+ * thank-you page). A small script in this component progressively
+ * enhances submission to stay on-page; see the <script> block.
  */
+const BASIN_ENDPOINT = "https://usebasin.com/f/58c138b684b1";
 ---
 
-<div class="soon" id="contact">
-  <span class="dot" aria-hidden="true"></span>
-  Contact — coming soon
-</div>
+<form class="contact" id="contact" data-contact action={BASIN_ENDPOINT} method="POST">
+  <label>
+    <span>Name</span>
+    <input type="text" name="name" required autocomplete="name" />
+  </label>
+  <label>
+    <span>Email</span>
+    <input type="email" name="email" required autocomplete="email" />
+  </label>
+  <label>
+    <span>Message</span>
+    <textarea name="message" rows="5" required></textarea>
+  </label>
+  <input
+    type="text"
+    name="_gotcha"
+    class="gotcha"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+  <button class="btn" type="submit">Send</button>
+  <p class="form-note" data-state hidden role="status"></p>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>("form[data-contact]");
+  const note = form?.querySelector<HTMLParagraphElement>("[data-state]");
+  const button = form?.querySelector<HTMLButtonElement>("button[type=submit]");
+
+  if (form && note && button) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      note.hidden = true;
+
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+        if (!res.ok) throw new Error(`Basin responded ${res.status}`);
+        for (const el of form.querySelectorAll("label, button")) el.remove();
+        note.hidden = false;
+        note.textContent = "Thanks — we'll be in touch.";
+      } catch {
+        note.hidden = false;
+        note.innerHTML =
+          'Something went wrong — email us directly at ' +
+          '<a href="mailto:franklinconsultancylimited@gmail.com">franklinconsultancylimited@gmail.com</a>.';
+        button.disabled = false;
+      }
+    });
+  }
+</script>
 
 <style>
-  .soon {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
+  .contact {
+    display: grid;
+    gap: 1rem;
+    max-width: 28rem;
+  }
+
+  .contact label {
+    display: grid;
+    gap: 0.35rem;
     font-family: var(--mono);
     font-size: var(--fs-small);
     color: var(--ink-muted);
-    border: 1px dashed var(--rule);
-    padding: 0.7rem 1.1rem;
   }
 
-  .dot {
-    width: 6px;
-    height: 6px;
-    background: var(--brass);
-    border-radius: 50%;
+  .contact input,
+  .contact textarea {
+    font: inherit;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 0.6rem 0.75rem;
+  }
+
+  .contact textarea {
+    resize: vertical;
+  }
+
+  /* Honeypot: visually removed, still submittable by bots. */
+  .gotcha {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .form-note {
+    font-family: var(--mono);
+    font-size: var(--fs-small);
+    color: var(--ink-muted);
+    margin: 0;
   }
 </style>
